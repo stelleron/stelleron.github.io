@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Stelleron Roboto";
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+}
 .index-header {
   font-family: "Roboto", sans-serif;
   font-size: 20px;

@@ -4,6 +4,11 @@ $font-type: 'Roboto', sans-serif;
 $font-color: black;
 $link-color: rgb(85, 26, 139);
 
+@font-face {
+  font-family: 'Stelleron Roboto';
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+}
+
 .index-header {
   font-family: $font-type;
   font-size: 20px;
