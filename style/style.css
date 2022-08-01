@@ -1,0 +1,91 @@
+.index-header {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  align-items: center;
+  align-content: center;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding: 0%;
+  margin-top: 20px;
+  margin-bottom: -12px;
+}
+
+span + span {
+  margin-left: 40px;
+}
+
+.index-title {
+  font-size: 45px;
+}
+
+.index-post-title {
+  font-size: 35px;
+}
+
+.index-post-date {
+  margin-top: 6px;
+  color: #999;
+  margin-bottom: 40px;
+}
+
+.index-post-desc {
+  font-size: 18px;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 0;
+  height: 1px;
+  background-color: rgba(136, 136, 136, 0.26);
+}
+
+a.index-link:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.index-link:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a.index-link:hover {
+  color: black;
+  background-color: transparent;
+}
+
+a.index-link:active {
+  color: black;
+  background-color: transparent;
+}
+
+a:link {
+  color: rgb(85, 26, 139);
+  background-color: transparent;
+}
+
+a:visited {
+  color: rgb(85, 26, 139);
+  background-color: transparent;
+}
+
+.content {
+  font-family: "Roboto", sans-serif;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.index-footer {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  justify-content: center;
+}
+
+.icon {
+  margin-right: 20px;
+}/*# sourceMappingURL=style.css.map */

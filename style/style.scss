@@ -1,0 +1,101 @@
+$left-margin: 25%;
+$right-margin: 25%;
+$font-type: 'Roboto', sans-serif;
+$font-color: black;
+$link-color: rgb(85, 26, 139);
+
+.index-header {
+  font-family: $font-type;
+  font-size: 20px;
+  align-items: center;
+  align-content: center;
+  margin-left: $left-margin;
+  margin-right: $right-margin;
+  padding: 0%;
+  margin-top: 20px;
+  margin-bottom: -12px;
+}
+
+span + span {
+  margin-left: 40px;
+}
+
+.index-title {
+  font-size: 45px;
+}
+
+.index-box {
+
+}
+
+.index-post-title {
+  font-size: 35px;
+}
+
+.index-post-date {
+  margin-top: 6px;
+  color: #999;
+  margin-bottom: 40px;
+}
+
+.index-post-desc {
+  font-size: 18px;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 0;
+  height: 1px;
+  background-color: rgba(136, 136, 136, 0.26);
+}
+
+a.index-link:link {
+    color: $font-color;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+a.index-link:visited {
+  color: $font-color;
+  background-color: transparent;
+  text-decoration: none;
+}
+  
+a.index-link:hover {
+  color: $font-color;
+  background-color: transparent;
+}
+  
+a.index-link:active {
+  color: $font-color;
+  background-color: transparent;
+}
+
+a:link {
+  color:$link-color;
+  background-color: transparent;
+}
+
+a:visited {
+  color:$link-color;
+  background-color: transparent;
+}
+
+.content {
+  font-family: $font-type;
+  margin-left: $left-margin;
+  margin-right: $right-margin;
+}
+
+.index-footer {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  justify-content: center;
+}
+
+.icon {
+  margin-right: 20px;
+}
