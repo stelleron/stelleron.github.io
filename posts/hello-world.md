@@ -22,7 +22,9 @@ First, I looked into Zola, since I liked the Hyde theme ported from Jekyll, and 
 ## How I made Nullsite
 I first tried to create Nullsite with Rust since most of what resources I looked into to learn how to create my own static site generator were in Rust, but I eventually swapped to Python for convenience. It had been over a whole year since I'd touched Python, and I must say, coming back to Python after using C++ feels like a breath of fresh air. The ease of usage and zero compile times, not needing to type in `#includes` everywhere and setup a project with Premake, shell files and all of my libraries made the developer experience so much more enjoyable. Oh, how I've missed you Python.
 
-The end result of Nullsite is pretty janky since I made it in a day, and it does use tons of global variables and repeated code blocks, but it works, so I don't really mind. It'll probably be a pain to add anything new to it though.
+The idea is simple - the Python file simply just looks at a provided config.toml file to find some important details, then loads all of the required Markdown files, converts it into HTML and injects it into a given template and saves it to create a blogpost. The information from all of the blogposts is saved and used to generate the index, which also sorts all of the blogposts by date.
+
+The end result of Nullsite is slightly janky since I made it in a day, and it does use tons of global variables and repeated code blocks, but it works, so I don't really mind. It'll probably be a pain to add anything new to it though.
 
 I'm still happy with the end result, which you can check in the [Projects](/site/projects.html) tab.
 
