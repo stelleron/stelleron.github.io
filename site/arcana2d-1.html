@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Designing my game framework (Pt 1) </title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;1,300;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="index-header">
+    <span class="index-title"><a href="/index.html" class="index-link">Stelleron's Blog</a></span>
+    <span class="index-box">
+        <span><a href = "/site/about.html" class="index-link">About</a></span>
+        <span><a href = "/site/projects.html" class="index-link">Projects</a></span>
+    </span>
+    <hr/>
+</div>
+<div class="content">
+<h1>The life and death of Glimmer2D</h1>
+<p>So I'm currently working on a game engine kinda similar to Love2D, but using the Wren scripting language to expose the API instead. To make the design easy, I split the engine into a frontend and a backend. The backend implement the features of a game engine like windowing, rendering and input handling, whereas the frontend would help it interface with the Wren API. I initially designed the two together, but then I realised I could design the backend seperately as a seperate game framework and wrap it with the Wren frontend in the game engine.</p>
+<p>And that's how Glimmer2D was born! Since I'd mostly worked around with the Raylib games library( a super-underrated game library that you should totally check <a href="https://www.raylib.com/index.html">out</a>), I used it as my inspiration for the API. </p>
+<p>Raylib's API, in my opinion, is amazing for beginner developers with its usage of the pleasant-to-read Pascal case and its comfortable naming conventions that simply tell you what a function does or the purpose of a given struct is, especially in comparision to other game libraries written in the C programming language. Something like <code>Font</code> or <code>GetFPS()</code> is a lot more readable than something like <code>sapp_sgcontext()</code>, which, while is from the wonderful Sokol game library, still looks a lot more daunting to an amateur programmer. </p>
+<p>Anyway, coming back to my game framework, I not only based my API on Raylib's, but also ended up learning a lot from its code when it came to game engine design. However, I found myself aping too much from Raylib's API, to the point it just felt kinda like a C++ binding for Raylib, so it ended up feeling like a bit of a pointless creation. That wasn't what discouraged me from finishing the framework though, it was the endless bugs I ran into when designing the rendering, stuff that I wouldn't solve until I swapped to working on my new framework, Arcana2D, where I decided to start on working on the renderer instead, since that's the beefiest and most difficult part of the engine. </p>
+<h1>Arcana2D - how it works</h1>
+<p>Arcana2D is my newer version of the game framework with an entirely different API, and I ended up liking the API a bit more. I took a bit of inspiration from game engines like Sokol and Bevy where instead of running the game in the <code>main()</code> function, it instead passes control to an <code>App</code> object that the user configures, sets an <code>init()</code>, <code>update()</code>, <code>render()</code> and <code>finish()</code> function so the app can automatically run them, passing down arguments for the user to interface with the engine's API while maintaining privacy. Each function passes down different data, and serves a different purpose.</p>
+<ol>
+<li>
+<p><code>init()</code> passes down an <code>AppConfig</code> so that the user can set details such as window size, background color, while also initialising/setting whatever data they want. A <code>UserData</code> object is used to store a void pointer to an object that stores of all of the game's relevant data that has to be shared by multiple functions, hence removing the need for global variables. All functions pass the <code>UserData</code> argument.</p>
+</li>
+<li>
+<p><code>update()</code> passes down a <code>GameContext</code> object that stores relevant information such as inputs buffered and delta time between frames. By controlling what data is passed down to the <code>update()</code> function, I can prevent draw commands from happening during the update phase of the game engine, so that the renderer and window can be prepared. The <code>update()</code> function just serves to update the game logic based on tabulated inputs and such, so that's why I wanted to seperate rendering from it.</p>
+</li>
+<li>
+<p><code>render()</code> passes down a <code>RenderContext</code> that simply allows the user to draw objects to the screen. How the renderer works and how I came to the decision of how I should implement it is something I look forward to discussing in a later blogpost.</p>
+</li>
+<li>
+<p><code>finish()</code> is just called when the game is closed, and only passes down  <code>UserData</code>. All of the game engine's data is automatically removed by the <code>App</code>'s destructor, so it just exists to do stuff like saving data and freeing user-allocated objects.</p>
+</li>
+</ol>
+<p>The structure of the framework is a lot more different from my initial version of it, but I am fond of it's design. It feels very contained and organised, and makes for a bit less of a hassle to code certain features with it, such as calculating delta time and capping frame rates. Well, hopefully I can finish up with this quickly so I can proceed to getting back to designing the Wren interface for my <strong>ACTUAL</strong> game engine. Until then, see you next time!</p>
+<hr>
+</div>
+
+<div class="index-footer">
+<a href="https://github.com/stelleron"><img src="/images/base/github-icon.png" class="icon"></a>
+</div>
+                  
+</body>
+</html>
