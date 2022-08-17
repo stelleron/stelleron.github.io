@@ -1,0 +1,32 @@
+===
+title: Designing my game framework (Pt 2)
+date: 17-08-2021
+description: In this blogpost, I talk about how the many options I considered for how to implement the engine's renderer to make drawing primitives quickly, and what I finally decided on for the implementation.
+===
+# Optimizing Rendering by minimizing draw calls
+One of the most essential factors to making a good game engine is making it fast and optimized, especially when it comes to rendering. As games get larger and larger and draw more and more objects and primitives, being able to optimize rendering is essential to keep 60 FPS, even for 2D games. 
+
+When I started learning OpenGL, I came across one important piece of advice that developers followed to optimize rendering: **Lesser draw calls = SPEED**. Essentially, whenever you invoke a draw command on a rendering API - for OpenGL that means calling `glDrawArrays()` or `glDrawElements()` to draw vertices - there's a performance overhead on sending all that data from the CPU to the GPU. As a result, calling draw commands multiple times can heavily affect the performance of an application.
+
+So, how do games manage to render thousands of objects if drawing each one is slow? Simple, they send the vertices for multiple objects at once to the GPU, hence reducing the number of times draw calls have to be made to the GPU, hence reducing the performance bottleneck. Through my research I found two different techniques for minimizing draw calls - batch rendering and instancing.
+
+- Batch Rendering: The idea is simple here, just store all the vertices for multiple objects in one batch and send it at once. You can not only send the position of each vertex, but the color and texture coordinates as well. Batch rendering is often the fastest of the two options, however it is pretty complex to implement and involves holding a great deal of vertex data in memory, which can lead to heavy memory consumption.
+
+- Instancing: Instancing is used to draw similar objects by specifing one instance of it and the number of copies of it that you want. In OpenGL, this means using the functions `glDrawArraysInstanced()` or `glDrawElementsInstanced()`. However, since developers can't specify position, scale and size in the vertex data for each instance induvidually since that data is used for all of them, developers upload that data as an array to a shader and the instance ID is used by it to find which object corresponds to which item in that array. Instancing, from what I've seen and heard, looks simpler to implement than batch rendering, but is slower.
+
+I ended up finding the most information for batch rendering since I learnt OpenGL from watching GamesWithGabe's and TheCherno's game engine tutorials, where they both use batch rendering. Also, since I learnt a lot about game programming from studying Raylib's source code, which implements batch rendering to draw stuff, I decided to stick with batch rendering for the game engine. The question now for me was how should I go about implementing that in my framework.
+
+# Figuring out how to implement my renderer
+My initial idea was that the renderer would store a default batch and send that over to the renderer. However, I eventually realised that different primitives require different drawing modes, so I'd have to switch over to a different batch everytime the user needed to draw a primitive with a different mode. If they were drawing lines previously, for example, and then the user switched to adding a rectangle to the scene, the batch would have to draw the batch containing the line vertices with GL_LINES and then switch to a batch for quads with the render mode GL_TRIANGLES, since the vertices can only be drawn with one buffer. However, if a user keeps switching between drawing the two, it'll lead to a lot of batches being sent to the GPU with little data and hence making batch rendering redundant.
+
+I then decided to make the renderer hold a batch for each primitive type, and draw the ones with vertex data stored in them. The problem is that holding multiple batches at a time consumes further amounts of memory. Also, another problem I ran into was that it would be really hard for the renderer to track when vertex data is modified, which is bound to happen every frame in any game as objects move and their positions change or may even get removed. I could've gone with rebuffering the data every frame, but that would be inefficient, as any static object that doesn't change would still have to be rendered.
+
+I decided to let the developer create their own vertex batches so they can modify the data stored inside whenever they'd like, and can hold static data for as long as the developer wants. I'd come across this idea when learning about SFML's vertex arrays, and while they are trickier to work with for the developer, since I was implementing this for a fairly low-level framework, I decided it would be fine. Besides, I'd still give for developers the option to render primitives regularly if performance wasn't a worry.
+
+# How Arcana2D renders primitives
+So with that decision, I created what I called a `VertexBuffer` struct for the game engine. Essentially, the user can define the rendering mode and the number of primitives that can be stored in the buffer like in SFML's vertex arrays, and push primitives into it to be converted into vertices. These vertices can be modified while in the buffer, and when sent to the `RenderContext` (see more about it in the previous [blogpost](./arcana2d-1.html)) the vertex buffer's vertices are converted into a float array that can be rendered by OpenGL. 
+
+I also created an `ElementBuffer` object that's used to track when the same vertex is used multiple times when drawing an object. For example, quads are composed of two triangles, making for six vertices. However, each triangle would share two of their three vertices, so OpenGL allows the creation of an `EBO`(Element Buffer Object) to allow developers to store 4 vertices instead and the positions of the reused vertices. Since not all primitives require it, the `ElementBuffer` is heap-allocated for primitive types that can use an `EBO`.
+
+It involved a great deal of challenge to implement, but the end result is something I'm happy with. And now that I've got primitives down, I'll be able to look into drawing sprites next and creating spritesheets, which will be the topic of my next blogpost.
+
