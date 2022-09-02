@@ -21,6 +21,6 @@ Arcana2D is a low-level game framework written in C++ using GLFW/GLAD, with an A
 Learn more about it [here](https://github.com/stelleron/arcana2d)
 
 ## MAGE Engine
-The MAGE Engine is a game engine inspired by the LÖVE2D Game Engine to help **M**ake **A**wesome **G**ames **E**asy! Built on top of the handwritten OpenGL-based library, the Glimmer2D framework, MAGE uses the amazing Wren scripting language to provide a convenient API to make for a comfortable game design experience.
+The MAGE Engine is a game engine inspired by the LÖVE2D Game Engine to help **M**ake **A**wesome **G**ames **E**asy! Built on top of the handwritten OpenGL-based library, the Arcana2D framework, MAGE uses the amazing Wren scripting language to provide a convenient API to make for a comfortable game design experience.
 
 Learn more about it [here](https://github.com/stelleron/mage-engine)
