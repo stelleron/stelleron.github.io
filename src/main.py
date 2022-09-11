@@ -95,6 +95,7 @@ class Post:
         # Then get the content of the markdown file ignoring the frontmatter
         endptr = source_copy.replace("===", "xxx", 1).find("===")
         self.content = source_copy[endptr + len("==="):]
+        
 
 # Blogpost data class
 class PostData:
