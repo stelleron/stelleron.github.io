@@ -24,6 +24,11 @@ I first tried to create Nullsite with Rust since most of what resources I looked
 
 The idea is simple - the Python file simply just looks at a provided config.toml file to find some important details, then loads all of the required Markdown files, converts it into HTML and injects it into a given template and saves it to create a blogpost. The information from all of the blogposts is saved and used to generate the index, which also sorts all of the blogposts by date.
 
+Also note that each Markdown blogpost comes with a YAML Frontmatter, which is essentially the stuff between the two `===` at the beginning of each Markdown file. This just contains all of the metadata, which includes:
+- Title of the blogpost
+- Date of publishing
+- A basic description
+
 The end result of Nullsite is slightly janky since I made it in a day, and it does use tons of global variables and repeated code blocks, but it works, so I don't really mind. It'll probably be a pain to add anything new to it though.
 
 I'm still happy with the end result, which you can check in the [Projects](/site/projects.html) tab.

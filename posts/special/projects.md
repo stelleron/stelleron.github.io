@@ -24,3 +24,17 @@ Learn more about it [here](https://github.com/stelleron/arcana2d)
 The MAGE Engine is a game engine inspired by the LÖVE2D Game Engine to help **M**ake **A**wesome **G**ames **E**asy! Built on top of the handwritten OpenGL-based library, the Arcana2D framework, MAGE uses the amazing Wren scripting language to provide a convenient API to make for a comfortable game design experience.
 
 Learn more about it [here](https://github.com/stelleron/mage-engine)
+
+## Other Projects
+Here's some minor projects that are really just there for fun
+
+### PyPaint
+A simple painting app made using Python and Pygame under 150 lines of code. You can draw in 11 different colors, resize your brush, and save the resulting drawing on your PC as a PNG, like this.
+
+![sample_image](/images/pypaint/my_drawing.png)
+
+You can find it [here](https://github.com/stelleron/bf-interpreter)
+
+### Yet Another Brainf**k Interpreter
+Yet another Brainf**k interpreter written in the Python programming language, under 100 lines of code. 
+You can find it [here](https://github.com/stelleron/bf-interpreter)
