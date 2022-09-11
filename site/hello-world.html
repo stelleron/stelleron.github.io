@@ -34,10 +34,12 @@ So, sometime during May, I took my blog down and flushed all evidence of it's ex
 <h2>How I made Nullsite</h2>
 <p>I first tried to create Nullsite with Rust since most of what resources I looked into to learn how to create my own static site generator were in Rust, but I eventually swapped to Python for convenience. It had been over a whole year since I'd touched Python, and I must say, coming back to Python after using C++ feels like a breath of fresh air. The ease of usage and zero compile times, not needing to type in <code>#includes</code> everywhere and setup a project with Premake, shell files and all of my libraries made the developer experience so much more enjoyable. Oh, how I've missed you Python.</p>
 <p>The idea is simple - the Python file simply just looks at a provided config.toml file to find some important details, then loads all of the required Markdown files, converts it into HTML and injects it into a given template and saves it to create a blogpost. The information from all of the blogposts is saved and used to generate the index, which also sorts all of the blogposts by date.</p>
-<p>Also note that each Markdown blogpost comes with a YAML Frontmatter, which is essentially the stuff between the two <code>===</code> at the beginning of each Markdown file. This just contains all of the metadata, which includes:
-- Title of the blogpost
-- Date of publishing
-- A basic description</p>
+<p>Also note that each Markdown blogpost comes with a YAML Frontmatter, which is essentially the stuff at the beginning of each Markdown file between the two lines made up of <code>=</code> symbols. This just contains all of the metadata, which includes:</p>
+<ul>
+<li>Title of the blogpost</li>
+<li>Date of publishing</li>
+<li>A basic description</li>
+</ul>
 <p>The end result of Nullsite is slightly janky since I made it in a day, and it does use tons of global variables and repeated code blocks, but it works, so I don't really mind. It'll probably be a pain to add anything new to it though.</p>
 <p>I'm still happy with the end result, which you can check in the <a href="/site/projects.html">Projects</a> tab.</p>
 <h2>Signing off</h2>
