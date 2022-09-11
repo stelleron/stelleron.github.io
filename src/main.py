@@ -109,10 +109,10 @@ class PostData:
         self.sort_date = datetime.datetime.strptime(self.date,"%d-%m-%Y").date()
 
     def __gt__(self, other):
-        if (self.date > other.date):
+        # First compare by year
+        if(self.sort_date > other.sort_date):
             return True
-        else:
-            return False
+        return False
 
 # Adds the HTML source to a template
 def add_to_template(source, post):
