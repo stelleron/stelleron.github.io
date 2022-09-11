@@ -6,7 +6,7 @@ description: For a bit of fun, I decided to make yet another Brainf**k interpret
 Here's a little fun project I whipped up in an hour. The implementation is just under a 100 lines of code, and with stripping comments and spaces out, it probably comes out to be around 60 lines. Let's jump right into it!
 
 # What is Brainf**k anyway?
-If you already know how the language works, you can skip this section. If you don't know, you can either read this section, or check out this amazing [video](https://www.youtube.com/watch?v=hdHjjBS4cs8&ab_channel=Fireship) by Fireship.io that summarises the whole in a 100-something seconds.
+If you already know how the language works, you can skip this section. If you don't know, you can either read this section, or check out this amazing [video](https://www.youtube.com/watch?v=hdHjjBS4cs8&ab_channel=Fireship) by Fireship that summarises the whole in a 100-something seconds.
 
 So basically, Brainf**k is an esoteric programming language famous for being incredibly minimalist, with only 8 commands. While it's Turing complete, meaning the programming language can theoretically solve any computational program, it's really impractical. It's still a fun thing to hack around with. So here's how the language works.
 
