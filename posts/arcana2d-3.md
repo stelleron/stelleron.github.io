@@ -1,6 +1,6 @@
 ===
 title: Designing my game framework (Pt 3)
-date: 09-09-2021
+date: 09-09-2022
 description: It's been a long while since I've made a post here, and the framework's made some major progress. Here I'll be going through some of the new API changes, how the framework logs messages and renders sprites.
 ===
 So it's been a long while since I've made updates to this blogpost. Being bogged down with schoolwork, exams, and other stuff, plus struggling to finish adding font and audio features have made getting this whole project done an uphill battle. However, the project is at the finish line, and I'm preparing a version 1.0.0 of the framework before I intergrate it to the game engine. Before all of that however, it's time for me to catch up on all of the changes I've made since then, and some new additions as well.

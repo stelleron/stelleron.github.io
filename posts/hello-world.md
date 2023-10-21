@@ -1,6 +1,6 @@
 ===
 title: Hello World!
-date: 01-08-2021
+date: 01-08-2022
 description: My first ever post. I look at my previous blog and why I took it down, and how I came to create this blog and the static site generator that powers it in Python
 ===
 # Hello World!
