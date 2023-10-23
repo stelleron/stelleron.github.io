@@ -1,9 +1,14 @@
 @font-face {
-  font-family: "Stelleron Roboto";
-  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+  font-family: "Ubuntu Mono";
+  src: url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
 }
+body {
+  background-color: white;
+  color: black;
+}
+
 .index-header {
-  font-family: "Roboto", sans-serif;
+  font-family: "Ubuntu Mono", monospace;
   font-size: 20px;
   align-items: center;
   align-content: center;
@@ -67,17 +72,17 @@ a.index-link:active {
 }
 
 a:link {
-  color: rgb(85, 26, 139);
+  color: rgb(187, 182, 38);
   background-color: transparent;
 }
 
 a:visited {
-  color: rgb(85, 26, 139);
+  color: rgb(187, 182, 38);
   background-color: transparent;
 }
 
 .content {
-  font-family: "Roboto", sans-serif;
+  font-family: "Ubuntu Mono", monospace;
   margin-left: 25%;
   margin-right: 25%;
 }
