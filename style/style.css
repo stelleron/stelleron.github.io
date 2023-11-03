@@ -20,7 +20,7 @@ body {
 }
 
 span + span {
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .index-title {
@@ -72,12 +72,12 @@ a.index-link:active {
 }
 
 a:link {
-  color: rgb(187, 182, 38);
+  color: rgb(38, 147, 187);
   background-color: transparent;
 }
 
 a:visited {
-  color: rgb(187, 182, 38);
+  color: rgb(38, 147, 187);
   background-color: transparent;
 }
 

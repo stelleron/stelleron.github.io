@@ -3,7 +3,7 @@ $right-margin: 25%;
 $font-type: 'Ubuntu Mono', monospace;
 $background-color: white;
 $font-color: black;
-$link-color: rgb(187, 182, 38);
+$link-color: rgb(38, 147, 187);
 
 @font-face {
   font-family: 'Ubuntu Mono';
@@ -28,7 +28,7 @@ body {
 }
 
 span + span {
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .index-title {
