@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <title> Shreyas Donti · Designing my game framework (Pt 2) </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+<body>
+	<div class="sidebar">
+		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
+<a href="https://www.linkedin.com/in/shreyas-donti-ab7582212"><img src="/images/base/linkedin-mark.svg" class="icon" width="32" height="32"></a></div>
+	</div>
+	<div class="content">
+		<h1 id="optimizing-rendering-by-minimizing-draw-calls">Optimizing Rendering by minimizing draw calls</h1>
+
+<p>One of the most essential factors to making a good game engine is making it fast and optimized, especially when it comes to rendering. As games get larger and larger and draw more and more objects and primitives, being able to optimize rendering is essential to keep 60 FPS, even for 2D games.</p>
+
+<p>When I started learning OpenGL, I came across one important piece of advice that developers followed to optimize rendering: <strong>Lesser draw calls = SPEED</strong>. Essentially, whenever you invoke a draw command on a rendering API - for OpenGL that means calling <code>glDrawArrays()</code> or <code>glDrawElements()</code> to draw vertices - there&rsquo;s a performance overhead on sending all that data from the CPU to the GPU. As a result, calling draw commands multiple times can heavily affect the performance of an application.</p>
+
+<p>So, how do games manage to render thousands of objects if drawing each one is slow? Simple, they send the vertices for multiple objects at once to the GPU, hence reducing the number of times draw calls have to be made to the GPU, hence reducing the performance bottleneck. Through my research I found two different techniques for minimizing draw calls - batch rendering and instancing.</p>
+
+<ul>
+<li><p>Batch Rendering: The idea is simple here, just store all the vertices for multiple objects in one batch and send it at once. You can not only send the position of each vertex, but the color and texture coordinates as well. Batch rendering is often the fastest of the two options, however it is pretty complex to implement and involves holding a great deal of vertex data in memory, which can lead to heavy memory consumption.</p></li>
+
+<li><p>Instancing: Instancing is used to draw similar objects by specifing one instance of it and the number of copies of it that you want. In OpenGL, this means using the functions <code>glDrawArraysInstanced()</code> or <code>glDrawElementsInstanced()</code>. However, since developers can&rsquo;t specify position, scale and size in the vertex data for each instance induvidually since that data is used for all of them, developers upload that data as an array to a shader and the instance ID is used by it to find which object corresponds to which item in that array. Instancing, from what I&rsquo;ve seen and heard, looks simpler to implement than batch rendering, but is slower.</p></li>
+</ul>
+
+<p>I ended up finding the most information for batch rendering since I learnt OpenGL from watching GamesWithGabe&rsquo;s and TheCherno&rsquo;s game engine tutorials, where they both use batch rendering. Also, since I learnt a lot about game programming from studying Raylib&rsquo;s source code, which implements batch rendering to draw stuff, I decided to stick with batch rendering for the game engine. The question now for me was how should I go about implementing that in my framework.</p>
+
+<h1 id="figuring-out-how-to-implement-my-renderer">Figuring out how to implement my renderer</h1>
+
+<p>My initial idea was that the renderer would store a default batch and send that over to the renderer. However, I eventually realised that different primitives require different drawing modes, so I&rsquo;d have to switch over to a different batch everytime the user needed to draw a primitive with a different mode. If they were drawing lines previously, for example, and then the user switched to adding a rectangle to the scene, the batch would have to draw the batch containing the line vertices with GL_LINES and then switch to a batch for quads with the render mode GL_TRIANGLES, since the vertices can only be drawn with one buffer. However, if a user keeps switching between drawing the two, it&rsquo;ll lead to a lot of batches being sent to the GPU with little data and hence making batch rendering redundant.</p>
+
+<p>I then decided to make the renderer hold a batch for each primitive type, and draw the ones with vertex data stored in them. The problem is that holding multiple batches at a time consumes further amounts of memory. Also, another problem I ran into was that it would be really hard for the renderer to track when vertex data is modified, which is bound to happen every frame in any game as objects move and their positions change or may even get removed. I could&rsquo;ve gone with rebuffering the data every frame, but that would be inefficient, as any static object that doesn&rsquo;t change would still have to be rendered.</p>
+
+<p>I decided to let the developer create their own vertex batches so they can modify the data stored inside whenever they&rsquo;d like, and can hold static data for as long as the developer wants. I&rsquo;d come across this idea when learning about SFML&rsquo;s vertex arrays, and while they are trickier to work with for the developer, since I was implementing this for a fairly low-level framework, I decided it would be fine. Besides, I&rsquo;d still give for developers the option to render primitives regularly if performance wasn&rsquo;t a worry.</p>
+
+<h1 id="how-arcana2d-renders-primitives">How Arcana2D renders primitives</h1>
+
+<p>So with that decision, I created what I called a <code>VertexBuffer</code> struct for the game engine. Essentially, the user can define the rendering mode and the number of primitives that can be stored in the buffer like in SFML&rsquo;s vertex arrays, and push primitives into it to be converted into vertices. These vertices can be modified while in the buffer, and when sent to the <code>RenderContext</code> (see more about it in the previous <a href="./arcana2d-1.html">blogpost</a>) the vertex buffer&rsquo;s vertices are converted into a float array that can be rendered by OpenGL.</p>
+
+<p>I also created an <code>ElementBuffer</code> object that&rsquo;s used to track when the same vertex is used multiple times when drawing an object. For example, quads are composed of two triangles, making for six vertices. However, each triangle would share two of their three vertices, so OpenGL allows the creation of an <code>EBO</code>(Element Buffer Object) to allow developers to store 4 vertices instead and the positions of the reused vertices. Since not all primitives require it, the <code>ElementBuffer</code> is heap-allocated for primitive types that can use an <code>EBO</code>.</p>
+
+<p>It involved a great deal of challenge to implement, but the end result is something I&rsquo;m happy with. And now that I&rsquo;ve got primitives down, I&rsquo;ll be able to look into drawing sprites next and creating spritesheets, which will be the topic of my next blogpost.</p>
+
+	</div>
+	<script>
+		hljs.highlightAll();
+	</script>
+</body>

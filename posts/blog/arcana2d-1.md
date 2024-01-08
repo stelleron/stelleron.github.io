@@ -1,6 +1,6 @@
 ===
 title: Designing my game framework (Pt 1)
-date: 09-08-2022
+date: 08-09-2022
 description: Designing a game framework isn't easy, and I can tell from experience. I'm going to talk about my old and now discontinued game framework Glimmer2D, why I redesigned it, and how my new game framework works.
 ===
 # The life and death of Glimmer2D

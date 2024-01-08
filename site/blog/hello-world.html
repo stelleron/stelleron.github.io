@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <title> Shreyas Donti · Hello World! </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+<body>
+	<div class="sidebar">
+		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
+<a href="https://www.linkedin.com/in/shreyas-donti-ab7582212"><img src="/images/base/linkedin-mark.svg" class="icon" width="32" height="32"></a></div>
+	</div>
+	<div class="content">
+		<h1 id="hello-world">Hello World!</h1>
+
+<p>As the title and description says, this is my first ever post on this blog! However, this isn&rsquo;t the first time I&rsquo;ve ever created a blog. Earlier this year, I created a blog using Jekyll Now during March to document my progress on my game engine and explore my design decisions. However, I found myself with a few problems during the making of the blog:
+<br>
+<br></p>
+
+<ul>
+<li><strong>Updating way too inconsistently</strong>: I only had three posts on the blog, and I made each post after a month&rsquo;s time. Since I was bogged down with schoolwork and exams and all of the pains and suffering of being a high schooler, I couldn&rsquo;t really make much time for this blog. Besides, when I did have some spare time, I would devote it to improving the game engine, segueing into my next problem:</li>
+<li><strong>Game Engine development progressed faster than I could blog about it</strong>: Even though I had only three posts about my game engine&rsquo;s progress, I&rsquo;d made many more leaps and bounds in the engine&rsquo;s development. In my second post I detailed how I setting up the basic framework for my engine. At that exact same point in time, I was working on extension loading and creating a Shader class for the engine.
+I wanted to be able to track my development step by step, but I was running way too fast for that. I ended up losing track of what concept I should blog about next since I would have finished implementing it long ago and have forgotten about it soon after.</li>
+<li><strong>I didn&rsquo;t like using Jekyll Now</strong>: This is more of a personal preference issue, since I just didn&rsquo;t link how Jekyll Now looked. Granted, it&rsquo;s an incredible tool and it made making blogs super convenient, but I just disliked how the font looked. Furthermore, I was struggling to get Jekyll installed on my Mac since the system&rsquo;s version of Ruby sucks and I kept getting errors saying that I didn&rsquo;t have permission access to download it. This meant that if I wanted to preview Jekyll&rsquo;s changes, I had to preview it after pushing my changes to my GitHub repo, and those changes could take many minutes to load.</li>
+</ul>
+
+<p><br>
+So, sometime during May, I took my blog down and flushed all evidence of it&rsquo;s existence down the toilet. But then come July and with a lot more free time now that I wasn&rsquo;t being anchored down by exams, I decided to reinstate my blog. However, I decided not to use Jekyll Now this time. I ended up looking into other options.</p>
+
+<h2 id="creating-my-second-blog">Creating my second blog</h2>
+
+<p>First, I looked into Zola, since I liked the Hyde theme ported from Jekyll, and since I was struggling with getting Jekyll installed, I went for the next option. But I kept struggling with using Zola and loading in the Hyde theme, so I eventually ditched it out of impatience. I eventually figured out how to install Jekyll via using another version of Ruby instead of the system version, but I came to realise how outdated Hyde was, and that it was incompatiable with recent versions of Jekyll. I eventually gave up with using external static site generators, and created one of my own.</p>
+
+<h2 id="how-i-made-nullsite">How I made Nullsite</h2>
+
+<p>I first tried to create Nullsite with Rust since most of what resources I looked into to learn how to create my own static site generator were in Rust, but I eventually swapped to Python for convenience. It had been over a whole year since I&rsquo;d touched Python, and I must say, coming back to Python after using C++ feels like a breath of fresh air. The ease of usage and zero compile times, not needing to type in <code>#includes</code> everywhere and setup a project with Premake, shell files and all of my libraries made the developer experience so much more enjoyable. Oh, how I&rsquo;ve missed you Python.</p>
+
+<p>The idea is simple - the Python file simply just looks at a provided config.toml file to find some important details, then loads all of the required Markdown files, converts it into HTML and injects it into a given template and saves it to create a blogpost. The information from all of the blogposts is saved and used to generate the index, which also sorts all of the blogposts by date.</p>
+
+<p>Also note that each Markdown blogpost comes with a YAML Frontmatter, which is essentially the stuff at the beginning of each Markdown file between the two lines made up of <code>=</code> symbols. This just contains all of the metadata, which includes:</p>
+
+<ul>
+<li>Title of the blogpost</li>
+<li>Date of publishing</li>
+<li>A basic description</li>
+</ul>
+
+<p>The end result of Nullsite is slightly janky since I made it in a day, and it does use tons of global variables and repeated code blocks, but it works, so I don&rsquo;t really mind. It&rsquo;ll probably be a pain to add anything new to it though.</p>
+
+<p>I&rsquo;m still happy with the end result, which you can check in the <a href="/site/projects.html">Projects</a> tab.</p>
+
+<h2 id="signing-off">Signing off</h2>
+
+<p>Overall, I&rsquo;m looking forward to start blogging again properly. My dev logs aren&rsquo;t necessarily gonna be tracking any of my projects, but rather just exploring stuff I&rsquo;ve learned or stuff I&rsquo;ve done in my projects, and I&rsquo;ll try to keep new blogposts with two weeks of each other at the very most. Now, time for me to get back to work!</p>
+
+	</div>
+	<script>
+		hljs.highlightAll();
+	</script>
+</body>

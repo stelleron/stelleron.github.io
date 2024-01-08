@@ -1,112 +1,144 @@
-$left-margin: 25%;
-$right-margin: 25%;
-$font-type: 'Ubuntu Mono', monospace;
-$background-color: white;
-$font-color: black;
-$link-color: rgb(38, 147, 187);
+$font-type: 'Ubuntu', sans-serif;
 
-@font-face {
-  font-family: 'Ubuntu Mono';
-  src: url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+body {
+    font-family: 'Ubuntu', sans-serif;
 }
 
 body {
-  background-color: $background-color;
-  color: $font-color;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  min-height: 100vh;
+  margin: 0;
 }
 
-.index-header {
-  font-family: $font-type;
-  font-size: 20px;
-  align-items: center;
-  align-content: center;
-  margin-left: $left-margin;
-  margin-right: $right-margin;
-  padding: 0%;
-  margin-top: 20px;
-  margin-bottom: -12px;
+.sidebar {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-bottom: -4em;
 }
 
-span + span {
-  margin-left: 20px;
-}
-
-.index-title {
-  font-size: 45px;
-}
-
-.index-box {
-
-}
-
-.index-post-title {
-  font-size: 35px;
-}
-
-.index-post-date {
-  margin-top: 6px;
-  color: #999;
-  margin-bottom: 40px;
-}
-
-.index-post-desc {
-  font-size: 18px;
-}
-
-hr {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  border: 0;
-  height: 1px;
-  background-color: rgba(136, 136, 136, 0.26);
-}
-
-a.index-link:link {
-    color: $font-color;
-    background-color: transparent;
-    text-decoration: none;
+@media (min-width: 48em) {
+  body {
+    flex-direction: row; /* Arrange items horizontally */
   }
-  
-a.index-link:visited {
-  color: $font-color;
-  background-color: transparent;
-  text-decoration: none;
-}
-  
-a.index-link:hover {
-  color: $font-color;
-  background-color: transparent;
-}
-  
-a.index-link:active {
-  color: $font-color;
-  background-color: transparent;
+
+  .sidebar {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 2em;
+    bottom: auto; /* Remove the bottom property */
+    width: 24rem;
+  }
 }
 
-a:link {
-  color:$link-color;
-  background-color: transparent;
-}
-
-a:visited {
-  color:$link-color;
-  background-color: transparent;
+@media (max-width: 48em) {
+  .sidebar {
+    margin-left: 2em;
+    margin-right: 2em;
+  }
 }
 
 .content {
-  font-family: $font-type;
-  margin-left: $left-margin;
-  margin-right: $right-margin;
+    padding: 4em
+  }
+  
+  @media (min-width: 48em) {
+    .content {
+      max-width: 48rem;
+      margin-left: 26rem;
+      margin-right: 2rem;
+    }
+  }
+  
+  @media (min-width: 64em) {
+    .content {
+      margin-left: 28rem;
+      margin-right: 4rem;
+    }
+  }
+
+.content img {
+  max-width: 100%;
+}
+  
+.profile-pic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+    border: 4px solid #a6a6a6; /* Optional: Add a border to the circular frame */
 }
 
-.index-footer {
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  justify-content: center;
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name {
+  margin-bottom: 0.1em;
+}
+
+.username {
+  color: #b7b7b7;
+}
+
+.pronouns {
+  color: #b7b7b7;
+}
+
+.description {
+  margin-top: 0.3em;
+  margin-bottom: 1.5em;
+}
+
+.sidebar-link-cont {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.sidebar-links {
+  color: #b7b7b7;
+  text-decoration: none;
+}
+
+.index-post-title {
+  font-size: 25px;
+  color: black;
+  text-decoration: none;
+}
+
+.index-post-title:hover {
+  color:#7a6f6f;
+}
+
+.index-post-date {
+  margin-top: 0.4em;
+  color: #999;
+  margin-bottom: 1em;
+}
+
+.index-post-desc {
+  font-size: 16px;
+  color: black;
+}
+
+.footer {
+  margin-top: 1.4em;
 }
 
 .icon {
-  margin-right: 20px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.index-post {
+  opacity: 0;
+  animation: fadeInUp;
+  animation-duration: 1.2s;     /* = (fadingin + showing + fadingout) * numquotes */
+  animation-fill-mode: forwards;
+  margin-top: 1.5em;
 }

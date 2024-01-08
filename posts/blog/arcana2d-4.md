@@ -1,6 +1,6 @@
 ===
 title: Designing my game framework (Pt 4)
-date: 06-10-2022
+date: 10-06-2022
 description: Well, I've done it! I've released a stable version of the Arcana2D framework, as well as of the MAGE Engine, and I wanted to share my thoughts about designing both of them.
 ===
 These past few months have been exhausting, but I finally produced a release version of both the Arcana2D framework **AND** the MAGE Engine! It's been a rough ride, especially with the amount of code I've had to write, which totalled up to 5000+ lines, more than any other project I've ever made before. For this final blogpost, I'll just be talking a bit about my grievances with rendering TTF fonts and playing audio in C++, and my overall thoughts on the Arcana2D framework.

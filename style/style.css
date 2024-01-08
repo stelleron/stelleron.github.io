@@ -1,100 +1,138 @@
-@font-face {
-  font-family: "Ubuntu Mono";
-  src: url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap");
-}
 body {
-  background-color: white;
-  color: black;
+  font-family: "Ubuntu", sans-serif;
 }
 
-.index-header {
-  font-family: "Ubuntu Mono", monospace;
-  font-size: 20px;
-  align-items: center;
-  align-content: center;
-  margin-left: 25%;
-  margin-right: 25%;
-  padding: 0%;
-  margin-top: 20px;
-  margin-bottom: -12px;
+body {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  min-height: 100vh;
+  margin: 0;
 }
 
-span + span {
-  margin-left: 20px;
+.sidebar {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-bottom: -4em;
 }
 
-.index-title {
-  font-size: 45px;
+@media (min-width: 48em) {
+  body {
+    flex-direction: row; /* Arrange items horizontally */
+  }
+  .sidebar {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 2em;
+    bottom: auto; /* Remove the bottom property */
+    width: 24rem;
+  }
+}
+@media (max-width: 48em) {
+  .sidebar {
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+}
+.content {
+  padding: 4em;
+}
+
+@media (min-width: 48em) {
+  .content {
+    max-width: 48rem;
+    margin-left: 26rem;
+    margin-right: 2rem;
+  }
+}
+@media (min-width: 64em) {
+  .content {
+    margin-left: 28rem;
+    margin-right: 4rem;
+  }
+}
+.content img {
+  max-width: 100%;
+}
+
+.profile-pic {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  padding: 5px;
+  border: 4px solid #a6a6a6; /* Optional: Add a border to the circular frame */
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.name {
+  margin-bottom: 0.1em;
+}
+
+.username {
+  color: #b7b7b7;
+}
+
+.pronouns {
+  color: #b7b7b7;
+}
+
+.description {
+  margin-top: 0.3em;
+  margin-bottom: 1.5em;
+}
+
+.sidebar-link-cont {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.sidebar-links {
+  color: #b7b7b7;
+  text-decoration: none;
 }
 
 .index-post-title {
-  font-size: 35px;
+  font-size: 25px;
+  color: black;
+  text-decoration: none;
+}
+
+.index-post-title:hover {
+  color: #7a6f6f;
 }
 
 .index-post-date {
-  margin-top: 6px;
+  margin-top: 0.4em;
   color: #999;
-  margin-bottom: 40px;
+  margin-bottom: 1em;
 }
 
 .index-post-desc {
-  font-size: 18px;
-}
-
-hr {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  border: 0;
-  height: 1px;
-  background-color: rgba(136, 136, 136, 0.26);
-}
-
-a.index-link:link {
+  font-size: 16px;
   color: black;
-  background-color: transparent;
-  text-decoration: none;
 }
 
-a.index-link:visited {
-  color: black;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a.index-link:hover {
-  color: black;
-  background-color: transparent;
-}
-
-a.index-link:active {
-  color: black;
-  background-color: transparent;
-}
-
-a:link {
-  color: rgb(38, 147, 187);
-  background-color: transparent;
-}
-
-a:visited {
-  color: rgb(38, 147, 187);
-  background-color: transparent;
-}
-
-.content {
-  font-family: "Ubuntu Mono", monospace;
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-.index-footer {
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  justify-content: center;
+.footer {
+  margin-top: 1.4em;
 }
 
 .icon {
-  margin-right: 20px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.index-post {
+  opacity: 0;
+  animation: fadeInUp;
+  animation-duration: 1.2s; /* = (fadingin + showing + fadingout) * numquotes */
+  animation-fill-mode: forwards;
+  margin-top: 1.5em;
 }/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+    <title> Shreyas Donti · Writing yet another Brainf**k interpreter in Python </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+<body>
+	<div class="sidebar">
+		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
+<a href="https://www.linkedin.com/in/shreyas-donti-ab7582212"><img src="/images/base/linkedin-mark.svg" class="icon" width="32" height="32"></a></div>
+	</div>
+	<div class="content">
+		<p>Here&rsquo;s a little fun project I whipped up in an hour. The implementation is just under a 100 lines of code, and with stripping comments and spaces out, it probably comes out to be around 60 lines. Let&rsquo;s jump right into it!</p>
+
+<h1 id="what-is-brainf-k-anyway">What is Brainf**k anyway?</h1>
+
+<p>If you already know how the language works, you can skip this section. If you don&rsquo;t know, you can either read this section, or check out this amazing <a href="https://www.youtube.com/watch?v=hdHjjBS4cs8&amp;ab_channel=Fireship" target="_blank">video</a> by Fireship that summarises the whole in a 100-something seconds.</p>
+
+<p>So basically, Brainf**k is an esoteric programming language famous for being incredibly minimalist, with only 8 commands. While it&rsquo;s Turing complete, meaning the programming language can theoretically solve any computational program, it&rsquo;s really impractical. It&rsquo;s still a fun thing to hack around with. So here&rsquo;s how the language works.</p>
+
+<p>First, it creates a one-dimensional array of at least 30,000 bytes with all values initialised to 0, and a pointer is set to the first element in the array. The programming language essentially works by manipulating this array. Second, everything that isn&rsquo;t a command gets ignored and treated as a comment. So, what are the commands that the language offers? Well, Brainf**k offers the following 8 single-character commands:</p>
+
+<ol>
+<li><code>&gt;</code> to increment the data pointer and point to the element to the right</li>
+<li><code>&lt;</code> to decrement the data pointer and point to the element to the left</li>
+<li><code>+</code> to increment the value stored in the current array cell the pointer is pointing towards</li>
+<li><code>-</code> to decrement the current value</li>
+<li><code>.</code> outputs the value stored at the pointer as a character</li>
+<li><code>,</code> take an input and store it in the pointed cell</li>
+<li><code>[</code> initiates a loop. If the byte at the data pointer is zero however, it breaks the loop and jumps to the next <code>]</code></li>
+<li><code>]</code> if the byte at the data pointer is not zero, it jumps the program back to the last seen <code>[</code>, closing the loop</li>
+</ol>
+
+<p>So that&rsquo;s a simple rundown of Brainf**k. The source code for a simple Hello World program can be found <a href="https://en.wikipedia.org/wiki/Brainfuck#Hello_World!" target="_blank">here</a> (credits to Wikipedia). Looks pretty confusing doesn&rsquo;t it? But it&rsquo;s surprisingly easy to implement.</p>
+
+<h1 id="how-my-interpreter-works">How my interpreter works</h1>
+
+<ol>
+<li>First, the program takes a .bf file as input, and strips all new lines from it, before sending that data to an <code>interpret()</code> function.</li>
+<li>The interpret creates an array of 30,000 integers(since bytes aren&rsquo;t a Python datatype as far as I know), and initialises it.</li>
+<li>The program then loops through the source code, one character at a time. If it finds a command, it processes it. Else, it ignores it.</li>
+<li>Note: Since everything in the array is an integer, the program has to cap output to numbers ranging from 0-255 cause otherwise it wouldn&rsquo;t be a valid ASCII character.</li>
+<li>If the program runs into an error, it prints out an error message, the instruction which caused it and where it happened, and exits.</li>
+</ol>
+
+<p>This works pretty well for linearly executed code. However, the interpreter also needs to implement jump commands, right? How does it do that?</p>
+
+<h1 id="the-loop-stack">The Loop Stack</h1>
+
+<p>The idea&rsquo;s real simple: when a loop is initiated by a <code>[</code> command, it gets pushed onto a loop stack that memorises it&rsquo;s current position. When the program encounters a <code>]</code>, it checks the value stored at the pointer, as well as pops the last item of the stack being the command that initiated that particular loop. If the value at the pointer is 0, the program just moves on as usual. Otherwise, it jumps to the byte before the location of the <code>[</code> that created the loop, starting it once again. Stacks work well for this model because it allows for nested loops.</p>
+
+<p>You can find the source code <a href="https://github.com/stelleron/bf-interpreter/blob/master/src/main.py" target="_blank">here</a> I&rsquo;ve done my best to comment everything in the project, but even then it should be easy to understand because the code is pretty small. Brainf**k interpreters are pretty popular projects to do for beginners, and I can see why. They&rsquo;re simple, require some knowledge of your programming language and hence test it well, don&rsquo;t need any external libraries, and can be really fun to make, like this one!</p>
+
+	</div>
+	<script>
+		hljs.highlightAll();
+	</script>
+</body>

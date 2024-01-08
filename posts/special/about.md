@@ -1,7 +1,7 @@
 ===
-title: About | Stelleron's Blog
+title: Shreyas Donti · About
+date: 12-02-2023
+description: About me
 ===
 # About Me
-Hello! I'm currently a high school senior who just likes to code as a hobby, and hopefully in the future, as a professional job! I'm pretty experienced with programming languages such as Lua, Python and C++, while also having a bit of experience with Rust and Haxe. My main interests in coding is just web dev, game dev and studying programming languages!
-
-I'm currently designing a game engine called the MAGE Engine using C++, the super-underrated Wren scripting language, and OpenGL to give myself an easy way to **M**ake **A**wesome **G**ames **E**asy!
+Hello! I'm currently a freshman student at the University of Massachusetts Amherst currently pursuing a Computer Science and Electrical Engineering double major! I'm an avid programmer who mainly programs in C++ and Python, with experience in C, Java, JavaScript, Rust, Go, Lua, and Haxe. My main interests currently lie in graphics programming and software development, though I'm looking to learn about computer architecture, operating systems, compilers, chip design, and many more of the near infinite fields in computers. Nice to meet you!

@@ -1,10 +1,12 @@
 # Your preferred name/username (to be displayed in the blog header)
-name = "Stelleron"
+name = "Shreyas Donti"
+username = "stelleron"
+pronouns = "he/him"
+description = "I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you!"
+profilepic = "/images/base/pfp.png"
 
-# Your About and Projects page location
-about = "posts/special/about.md"
-projects = "posts/special/projects.md"
-
-[footer]
-# Your GitHub profile link(uncomment to add)
+[sidebar]
+# Your GitHub profile link (leave string empty for no link)
 github = "https://github.com/stelleron"
+linkedin = "https://www.linkedin.com/in/shreyas-donti-ab7582212"
+

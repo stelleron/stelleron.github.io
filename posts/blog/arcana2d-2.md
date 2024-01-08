@@ -1,6 +1,6 @@
 ===
 title: Designing my game framework (Pt 2)
-date: 17-08-2022
+date: 08-17-2022
 description: In this blogpost, I talk about how the many options I considered for how to implement the engine's renderer to make drawing primitives quickly, and what I finally decided on for the implementation.
 ===
 # Optimizing Rendering by minimizing draw calls

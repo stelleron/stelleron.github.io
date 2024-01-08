@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <title> Shreyas Donti · Designing my game framework (Pt 4) </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+<body>
+	<div class="sidebar">
+		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
+<a href="https://www.linkedin.com/in/shreyas-donti-ab7582212"><img src="/images/base/linkedin-mark.svg" class="icon" width="32" height="32"></a></div>
+	</div>
+	<div class="content">
+		<p>These past few months have been exhausting, but I finally produced a release version of both the Arcana2D framework <strong>AND</strong> the MAGE Engine! It&rsquo;s been a rough ride, especially with the amount of code I&rsquo;ve had to write, which totalled up to 5000+ lines, more than any other project I&rsquo;ve ever made before. For this final blogpost, I&rsquo;ll just be talking a bit about my grievances with rendering TTF fonts and playing audio in C++, and my overall thoughts on the Arcana2D framework.</p>
+
+<h1 id="font-rendering">Font Rendering</h1>
+
+<p>I still have nightmares of trying and failing to render TrueTypes, with the framework either throwing a segmentation fault or generating an incomprehensible bitmap. The main difficulty with trying to get TTFs to work for me was trying to generate the bitmap. TTF font rendering is a tricky process that involves a couple of steps to follow:</p>
+
+<ol>
+<li>First, you have to get the data for each glyph in the TTF and store it in an image.</li>
+<li>Then, you have to fuse all of those images into one large bitmap. This is done so that you don&rsquo;t have to bind a texture for each glyph, which can get out of hand and slow down text rendering as the engine constantly switches between textures for rendering different characters. The target rectangles for each glyph should also be stored, so that texture coordinates can be determined by the renderer to identify seperate characters and which ones should be rendered.</li>
+<li>Since TTF image data is stored in grayscale, it has to first be converted to a gray alpha format so that all of the blank area within each glyph is made transparent. From there, the bitmap can be converted into a texture.</li>
+<li>From there, the texture can be passed to the renderer to render text. Each of the aforementioned target rectangles has to be mapped to a character so that the renderer can find where each character is in the texture.</li>
+</ol>
+
+<p>So font rendering is a pretty complex task. My first issue was trying to find a library for loading TTFs. I initially tried to use the Freetype library, but constantly ran into problems trying to set it up on my system. I ended up deciding to use <code>stb_truetype.h</code> since it was the best alternative and easy to set up (I just had to download and include the header file).</p>
+
+<p>However, I had no idea whatsoever as to how I could implement bitmap generation, so I just shamelessly took from the Raylib code again. I would like to mention here quickly that the Raylib source code&rsquo;s definitely something to look into when designing your game engine for the first time. It&rsquo;s well documented, and implements a ton of features that you might want to add in your game engine.</p>
+
+<p>Anyway, back to TTF rendering. While I took Raylib&rsquo;s bitmap generation algorithm, I kept running into issues with it throwing segmentation faults or generating buggy bitmaps, so I had to spend a few days tweaking the algorithm until it functioned properly. Afterwards, it was pretty easy to make the renderer draw text to the screen. It just had to iterate through each character in the line of text to be printed, draw each character to the screen from a certain specified position, and then add the character&rsquo;s rectangular dimensions as an offset so that the next character can be print to the right of the current one.</p>
+
+<h1 id="playing-audio">Playing Audio</h1>
+
+<p>I never realised just how complex audio management was until I tried to add it to Arcana2D. I initially tried to work with Miniaudio for audio management, but I found myself wasting too much time trying to figure out how the whole thing worked rather than implementing anything in the framework. So, for the time being, I settled on using irrKlang for a really simple and barebones audio player. In the future, I&rsquo;ll probably slowly phase it out for Minaudio and provide a lot more features, but until I&rsquo;ve tested it out for myself and figured out how to make audio management work, the framework will be relying on irrKlang to play audio.</p>
+
+<h1 id="overall-thoughts">Overall Thoughts</h1>
+
+<p>Overall, I&rsquo;m pretty satisfied with how the framework turned out, considering that it was my first time ever making something like this. I do wish I could&rsquo;ve fleshed out the audio API a lot more, and while future updates will definitely expand it, it is probably the weakest part of the framework right now. But otherwise, I think Arcana2D offers a lot of the base features needed for developing games, and it&rsquo;s API feels nice to use.</p>
+
+<p>For the MAGE Engine, I feel that Arcana2D&rsquo;s API is a bit weirder, but I still think it works. Creating the Wren API required a load of effort on my part, but finishing it was satisfying, knowing I had finally finished a big project. I&rsquo;m looking forward to further improving it, but for the meantime I&rsquo;ll be taking a break from it cause I certainly need one.</p>
+
+	</div>
+	<script>
+		hljs.highlightAll();
+	</script>
+</body>

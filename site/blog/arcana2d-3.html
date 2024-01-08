@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <title> Shreyas Donti · Designing my game framework (Pt 3) </title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" href="/style/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet"> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+<body>
+	<div class="sidebar">
+		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
+<a href="https://www.linkedin.com/in/shreyas-donti-ab7582212"><img src="/images/base/linkedin-mark.svg" class="icon" width="32" height="32"></a></div>
+	</div>
+	<div class="content">
+		<p>So it&rsquo;s been a long while since I&rsquo;ve made updates to this blogpost. Being bogged down with schoolwork, exams, and other stuff, plus struggling to finish adding font and audio features have made getting this whole project done an uphill battle. However, the project is at the finish line, and I&rsquo;m preparing a version 1.0.0 of the framework before I intergrate it to the game engine. Before all of that however, it&rsquo;s time for me to catch up on all of the changes I&rsquo;ve made since then, and some new additions as well.</p>
+
+<h1 id="cpp-ifying-the-application-class">CPP-ifying the Application class</h1>
+
+<p>Just to catch up, in the original version of the framework, in order for the user to maintain privacy and encapsulation, the user would have to store their external data in an external class or struct and store a reference to it in the <code>userData</code> field of the <code>App</code> class as a <code>void*</code> pointer, and then whenever a function was called, the pointer could be converted from a void pointer dereferenced to obtain their exteral class instance inside the game loop functions. To learn more in detail about how that worked, check this post <a href="./arcana2d-1.html">here</a>.</p>
+
+<p>This was a pretty C-like way to do things, and while it worked, I felt like I could do something a bit more convenient and one that didn&rsquo;t require the user to have to dereference a pointer everytime they wanted to access class data and functions. So instead, I decided to make the Application class abstract, and have the user implement all of the virtual functions attached to it. That way, the Application class instance can still be passed to an external build function that runs the app, and enables encapsulation of everything, including hiding private fields.</p>
+
+<p>I also decided to create a seperate function from the <code>init()</code> function called <code>config()</code> so that instead of having to pass an <code>AppConfig</code> to configure the game&rsquo;s window inside the <code>main()</code> function, they can do it inside the extended app class. This also solved another problem that it&rsquo;s impossible to do stuff like load textures and create default shaders in the <code>init()</code> without the window being created first, so the two were seperate so that functions dependent of GLFW/GLAD can still be called in the <code>init()</code> function.</p>
+
+<h1 id="message-logging">Message Logging</h1>
+
+<p>This is the only thread-unsafe part of the framework, and it still can be made thread-safe with some basic mutex-locking on the developer&rsquo;s part. I wanted to make the logger public and universal since it really just exists for the purposes of debugging and can be disabled in Release builds. I also wanted the user to be able to do whatever they wanted with logger information by setting a log callback. This not only gives users control over logging, but also makes it easy to disable since the logger callback could just be set to a function that does nothing at all.</p>
+
+<p>My end result looks something like this:</p>
+
+<p><img src="/images/arcana2d/logger_code.png" alt="Logger.hpp" /></p>
+
+<p>This is just what the header file exposes. I&rsquo;ll try to break down what&rsquo;s happening here.</p>
+
+<ol>
+<li><p>First, there&rsquo;s a Logger class. It simply just stores a function that the logger uses for logging messages. These messages are buffered in a string, which is the <code>message</code> field. Also similar to <code>cout</code> and <code>cin</code> in C++, it uses bit shift operators to send data to the logger. I used this because it&rsquo;s a nice and easy to use format in my opinion, one that C++ developers should be familiar with using. Essentially, the user adds data to the logger using bit shift operators, then adds a <code>LogEnd</code> object to tell the logger when it is done receiving information, after which the message is converted to a <code>const char*</code> and sent to the log callback function.</p></li>
+
+<li><p>The empty <code>LogEnd</code> struct simply exists just to tell the logger when to stop logging. That&rsquo;s it&rsquo;s only purpose.</p></li>
+
+<li><p>Also, you&rsquo;ll notice that there are two external variables, one for the logger and one for the <code>LogEnd</code> object. I got this idea from how <code>std::cout</code> actually works, because that is an external variable as well. The <code>extern</code> exposes the internal logger so other parts of the program can easily log messages without needing to create their own instances of each object.</p></li>
+</ol>
+
+<p>And that&rsquo;s how the logger works.</p>
+
+<h1 id="rendering-sprites">Rendering sprites</h1>
+
+<p>First, I had to figure out how to render both sprites and primitives using the same shader, because I didn&rsquo;t want to have to compile two of them. To answer that, I shamelessly stole this idea from the Raylib code, which involves creating a 1x1 white pixel as a default texture that primitives will be drawn with, essentially making them all sprites. All primitives will preserve their own color when drawn with the white pixel, so that problem is solved.</p>
+
+<p>And to be honest, there really wasn&rsquo;t much more to drawing sprites. Since I had never been used to working with sprite rendering, I expected there to be a lot more involved with the process. But in reality, the main hurdle was simply figuring out how to integrate that with my existing renderer.</p>
+
+<p>Well, that&rsquo;s most of what I have to say this time around. With my workload, it&rsquo;s gonna be tough to finish the framework soon, but since I&rsquo;m nearly there, it shouldn&rsquo;t be too much of a hassle. Well, till next time!</p>
+
+	</div>
+	<script>
+		hljs.highlightAll();
+	</script>
+</body>

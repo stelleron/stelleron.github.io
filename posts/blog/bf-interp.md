@@ -1,6 +1,6 @@
 ===
 title: Writing yet another Brainf**k interpreter in Python
-date: 11-09-2022
+date: 09-11-2022
 description: For a bit of fun, I decided to make yet another Brainf**k interpret in Python. Here's a simple breakdown of the language and how the code works
 ===
 Here's a little fun project I whipped up in an hour. The implementation is just under a 100 lines of code, and with stripping comments and spaces out, it probably comes out to be around 60 lines. Let's jump right into it!
