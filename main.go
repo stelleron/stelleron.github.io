@@ -260,12 +260,12 @@ func publish_folder(p_folder ProjectFolder) {
 
 func generate_blog_homepage() {
 	sort.Sort(blogposts_data)
-	html_data := ""
+	html_data := "<h1>My Blog</h1>"
 	anim_delay := 0.0
 	for x, blogpost := range blogposts_data {
 		var blogpost_html string
 		if x < len(blogposts_data)-1 {
-			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(BlogPathForLinks, blogpost.FileName), blogpost.Title, blogpost.Date, blogpost.Description, "<hr>")
+			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(BlogPathForLinks, blogpost.FileName), blogpost.Title, blogpost.Date, blogpost.Description, "<hr class=\"index-post-hr\">")
 		} else {
 			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(BlogPathForLinks, blogpost.FileName), blogpost.Title, blogpost.Date, blogpost.Description, "")
 		}
@@ -281,12 +281,12 @@ func generate_blog_homepage() {
 
 func generate_projects_homepage() {
 	sort.Sort(projects_data)
-	html_data := ""
+	html_data := "<h1>My Projects</h1>"
 	anim_delay := 0.0
 	for x, project := range projects_data {
 		var blogpost_html string
 		if x < len(projects_data)-1 {
-			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(ProjectPathForLinks, project.FileName), project.Title, project.Date, project.Description, "<hr>")
+			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(ProjectPathForLinks, project.FileName), project.Title, project.Date, project.Description, "<hr class=\"index-post-hr\">")
 		} else {
 			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(ProjectPathForLinks, project.FileName), project.Title, project.Date, project.Description, "")
 		}
