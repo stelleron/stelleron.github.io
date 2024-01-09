@@ -32,7 +32,7 @@ Also note that each Markdown blogpost comes with a YAML Frontmatter, which is es
 
 The end result of Nullsite is slightly janky since I made it in a day, and it does use tons of global variables and repeated code blocks, but it works, so I don't really mind. It'll probably be a pain to add anything new to it though.
 
-I'm still happy with the end result, which you can check in the [Projects](/site/projects.html) tab.
+I'm still happy with the end result, which you can check in the [Projects](/) tab.
 
 ## Signing off
 Overall, I'm looking forward to start blogging again properly. My dev logs aren't necessarily gonna be tracking any of my projects, but rather just exploring stuff I've learned or stuff I've done in my projects, and I'll try to keep new blogposts with two weeks of each other at the very most. Now, time for me to get back to work!

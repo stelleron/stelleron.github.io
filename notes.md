@@ -1,6 +1,6 @@
-Homepage (Autogen)
-- [Projects] (Projects)
-- About (Special)
-- Resume (Special)
-- Blog (Autogen)
-    - [Blogposts] (Blogposts)
+- Homepage 
+    - [Projects] 
+    - About 
+    - Resume 
+    - Blog 
+        - [Blogposts] 

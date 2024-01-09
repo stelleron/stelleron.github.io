@@ -11,11 +11,60 @@
 </head>
 <body>
 	<div class="sidebar">
-		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm a CS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
+		<img class="profile-pic" src=" /images/base/pfp.png "><h1 class="name"> Shreyas Donti </h1><span class="username"> stelleron </span><span class="username"> · </span><span class="pronouns"> he/him </span><p class="description"> I'm an EECS student at UMass Amherst! I'm a passionate coder who likes tinkering with programming languages and anything CS-related. Nice to meet you! </p><p class="sidebar-link-cont"><a href="/" class="sidebar-links">Home</a></p><p class="sidebar-link-cont"><a href="/site/about.html" class="sidebar-links">About</a></p><p class="sidebar-link-cont"><a href="/site/resume.html" class="sidebar-links">Resume</a></p><p class="sidebar-link-cont"><a href="/site/blog.html" class="sidebar-links">Blog</a></p><div class="footer"><a href="https://github.com/stelleron"><img src="/images/base/github-mark.svg" class="icon" width="32" height="32"></a>
 <a href="https://www.linkedin.com/in/shreyas-donti-ab7582212"><img src="/images/base/linkedin-mark.svg" class="icon" width="32" height="32"></a></div>
 	</div>
 	<div class="content">
-		
+		<h1 id="i-m-back">I&rsquo;m back!</h1>
+
+<p>It&rsquo;s been about an year since I made my last blog post, and a lot has changed since then. I finally graduated from high school, and joined the University of Massachusetts Amherst as an Electrical Engineering and Computer Science major. I&rsquo;ve also just been practicing my coding skills, reworking my old game framework and ended up creating a new one (which I&rsquo;ll discuss more in a bit!), and I&rsquo;ve begun creating a roadmap for my coding career and for the future of this blog. I&rsquo;ve also revamped Nullsite, the static site generator that produces the pages for this blog! I have a lot to cover in this blogpost, so I&rsquo;ll start moving down the list.</p>
+
+<h2 id="the-new-game-framework-sorta">The new game framework - sorta</h2>
+
+<p>So I created a new-ish game framework called Xenon, which is basically just my old Arcana2D framework but with an SDL2 backend instead of GLFW. When I was initially working on a game prototype in my old Arcana2D framework, I noticed that when I tried to create a fullscreen window, I wasn&rsquo;t able to get a cool looking native fullscreen window on my MacBook. When I did some research on why I couldn&rsquo;t get native fullscreen working, I learnt that GLFW hadn&rsquo;t actually implemented native fullscreen on MacOS.
+For Windows users, MacOS allows you to open and run apps in a new window (as shown below by the image), which I believe is different from traditional maximize/fullscreen displays on a Windows computer. I initially wanted to work around this by having users of the game open the window in native fullscreen themselves, but GLFW couldn&rsquo;t detect native fullscreen, so I eventually decided to ditch GLFW and rewrite the framework with SDL, since SDL had native fullscreen for MacOS.</p>
+
+<p><img src="/images/returning-back/window.png" alt="Example of Fullscreen Window on MacOS" /></p>
+
+<p>Hence, Xenon was born. Initially starting out as a rewrite of my game engine with an SDL2 backend, I would eventually keep updating the Xenon framework while deprecating the Arcana2D framework. Now I&rsquo;ve added expanded audio features, improved font rendering, and even cleaned out a few bugs that were in the original framework. Moving forward, everything I do will be in the Xenon framework, as it has now distanced itself a quite bit from the original framework it originated from, and I&rsquo;m looking forward to building new games with it.</p>
+
+<h2 id="nullsite-go-the-new-and-improved-nullsite">Nullsite Go - The new and improved Nullsite</h2>
+
+<p>When I first created this blog, I built it with a custom static site generator written in Python which took a bunch of Markdown files and converted them to HTML, to produce an end result that looked like this:</p>
+
+<p><img src="/images/returning-back/old-nullsite.png" alt="Old Nullsite" /></p>
+
+<p>However, I found that the old Nullsite was a bit antiquated and suffered from a couple of issues, being:</p>
+
+<ul>
+<li>The website wasn&rsquo;t responsive and the top bar would become misshapen on smaller screens or width</li>
+<li>The Python markdown-to-HTML converter I was using didn&rsquo;t interpret code highlighting statements, so I wasn&rsquo;t able to use libraries like <a href="https://highlightjs.org/" target="_blank">highlight.js</a> to implement syntax highlighting, which is pretty crucial for a coding blog.</li>
+<li>I wanted to be able to add other pages for displaying my resume and individual project pages, as well as rework the visuals for my website to look more appealing to recruiters and just visitors of the site in general.</li>
+</ul>
+
+<p>So, I decided to rewrite my project, this time using Go instead of Python since I wanted to do a project to learn Go and because I was able to find a markdown-to-HTML converter that could implement syntax highlighting. The code I would implement would be pretty similar to my original Nullsite implementation, but in a different language, and parsing a different file structure used to arrange the website like so:</p>
+
+<ul>
+<li>Homepage
+
+<ul>
+<li>[Projects]</li>
+<li>About</li>
+<li>Resume</li>
+<li>Blog
+
+<ul>
+<li>[Blogposts]</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>I would also add more parameters to the <code>config.toml</code> file to allow for more customization, and add a few animations to display each of the blogposts and projects. While Nullsite Go is still under construction and needs a few more touches, I hope to complete it within the week.</p>
+
+<h2 id="looking-to-the-future">Looking to the future</h2>
+
+<p>Aside from finishing up the blog, there&rsquo;s a lot of projects I&rsquo;m looking to try and get done this year and blog about, and I wish to commemorate this blog by starting out with a either a blogpost or even a series detailing my exploration into full-stack web development. I&rsquo;m currently working on a project with React and Django, and if all goes well, I&rsquo;ll be able to complete it within January, and have a blogpost ready then. Until then, this is me, signing out for what I hope doesn&rsquo;t end up being another silent year!</p>
+
 	</div>
 	<script>
 		hljs.highlightAll();
