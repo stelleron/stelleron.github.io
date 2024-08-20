@@ -1,5 +1,18 @@
 $font-type: 'Ubuntu', sans-serif;
 
+.page {
+  display: inline-block;
+  position: relative;
+  height: 11in;
+  width: 8.5in;
+  font-size: 12pt;
+  padding: calc(var(--bleeding) + var(--margin) - 25px);
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  background: white;
+  font-family: "PT Serif", sans-serif; 
+}
+
+
 body {
     font-family: 'Ubuntu', sans-serif;
 }
