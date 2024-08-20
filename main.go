@@ -63,12 +63,13 @@ type Frontmatter struct {
 }
 
 type ProjectFrontmatter struct {
-	FileName    string
-	Title       string
-	Date        string
-	Description string
-	Link        string
-	SortDate    time.Time
+	FileName     string
+	Title        string
+	Date         string
+	Description  string
+	Link         string
+	ProjectImage string
+	SortDate     time.Time
 }
 
 type FrontmatterList []Frontmatter
@@ -137,6 +138,7 @@ const HtmlProjectTemplate = `
 <div class="index-post" style="animation-delay: %fs">
 <a href="%s" class="index-post-title">%s</a>
 <div class="index-post-date">%s</div>
+%s
 <p class="index-post-desc">%s</p>
 %s
 </div>
@@ -206,13 +208,21 @@ func process_project_md_file(md_file MarkdownFile) (string, ProjectFrontmatter) 
 	date_loc := strings.Index(frontmatter_data, "date")
 	description_loc := strings.Index(frontmatter_data, "description")
 	link_loc := strings.Index(frontmatter_data, "link")
+	project_img_loc := strings.Index(frontmatter_data, "project-image")
 
 	frontmatter_obj := ProjectFrontmatter{
-		FileName:    md_file.FileName,
-		Title:       frontmatter_data[title_loc+len("title:")+1 : date_loc],
-		Date:        frontmatter_data[date_loc+len("date:")+1 : description_loc],
-		Description: frontmatter_data[description_loc+len("description:")+1 : link_loc],
-		Link:        frontmatter_data[link_loc+len("link:"):],
+		FileName:     md_file.FileName,
+		Title:        frontmatter_data[title_loc+len("title:")+1 : date_loc],
+		Date:         frontmatter_data[date_loc+len("date:")+1 : description_loc],
+		Description:  frontmatter_data[description_loc+len("description:")+1 : link_loc],
+		Link:         frontmatter_data[link_loc+len("link:")+1 : project_img_loc],
+		ProjectImage: frontmatter_data[project_img_loc+len("project-image:")+1:],
+	}
+
+	if frontmatter_obj.ProjectImage != "None" {
+		frontmatter_obj.ProjectImage = fmt.Sprintf("<img src=\"images/%s\" width=\"450\" height=\"300\">", frontmatter_obj.ProjectImage)
+	} else {
+		frontmatter_obj.ProjectImage = ""
 	}
 
 	var err error
@@ -339,9 +349,9 @@ func generate_projects_homepage(p_folder ProjectFolder) {
 	for x, project := range projects_data {
 		var blogpost_html string
 		if x < len(projects_data)-1 {
-			blogpost_html = fmt.Sprintf(HtmlProjectTemplate, anim_delay, project.Link, project.Title, project.Date, project.Description, "<hr class=\"index-post-hr\">")
+			blogpost_html = fmt.Sprintf(HtmlProjectTemplate, anim_delay, project.Link, project.Title, project.Date, project.ProjectImage, project.Description, "<hr class=\"index-post-hr\">")
 		} else {
-			blogpost_html = fmt.Sprintf(HtmlProjectTemplate, anim_delay, project.Link, project.Title, project.Date, project.Description, "")
+			blogpost_html = fmt.Sprintf(HtmlProjectTemplate, anim_delay, project.Link, project.Title, project.Date, project.ProjectImage, project.Description, "")
 		}
 		html_data += blogpost_html
 		anim_delay += AnimDelayIncrement
