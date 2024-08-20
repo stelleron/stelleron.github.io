@@ -62,11 +62,25 @@ type Frontmatter struct {
 	SortDate    time.Time
 }
 
+type ProjectFrontmatter struct {
+	FileName    string
+	Title       string
+	Date        string
+	Description string
+	Link        string
+	SortDate    time.Time
+}
+
 type FrontmatterList []Frontmatter
+type ProjectFrontmatterList []ProjectFrontmatter
 
 func (f FrontmatterList) Len() int           { return len(f) }
 func (f FrontmatterList) Swap(i, j int)      { f[i], f[j] = f[j], f[i] }
 func (f FrontmatterList) Less(i, j int) bool { return f[i].SortDate.After(f[j].SortDate) }
+
+func (f ProjectFrontmatterList) Len() int           { return len(f) }
+func (f ProjectFrontmatterList) Swap(i, j int)      { f[i], f[j] = f[j], f[i] }
+func (f ProjectFrontmatterList) Less(i, j int) bool { return f[i].SortDate.After(f[j].SortDate) }
 
 // Global variables
 var blog_name string
@@ -76,7 +90,7 @@ var pronouns string
 var description string
 var links_sidebar string
 var blogposts_data FrontmatterList
-var projects_data FrontmatterList
+var projects_data ProjectFrontmatterList
 
 // Constants
 const AnimDelayIncrement = 0.15
@@ -111,6 +125,15 @@ const HtmlTemplate = `<!DOCTYPE html>
 </body>
 `
 const HtmlBlogpostTemplate = `
+<div class="index-post" style="animation-delay: %fs">
+<a href="%s" class="index-post-title">%s</a>
+<div class="index-post-date">%s</div>
+<p class="index-post-desc">%s</p>
+%s
+</div>
+`
+
+const HtmlProjectTemplate = `
 <div class="index-post" style="animation-delay: %fs">
 <a href="%s" class="index-post-title">%s</a>
 <div class="index-post-date">%s</div>
@@ -160,6 +183,36 @@ func process_md_file(md_file MarkdownFile) (string, Frontmatter) {
 		Title:       frontmatter_data[title_loc+len("title:")+1 : date_loc],
 		Date:        frontmatter_data[date_loc+len("date:")+1 : description_loc],
 		Description: frontmatter_data[description_loc+len("description:"):],
+	}
+
+	var err error
+	frontmatter_obj.SortDate, err = time.Parse("01-02-2006", frontmatter_obj.Date)
+	if err != nil {
+		fmt.Println("Error parsing date:", err)
+	}
+
+	end_ptr := strings.Index(strings.Replace(md_file.FileText, "===", "xxx", 1), "===")
+
+	return md_file.FileText[end_ptr+len("==="):], frontmatter_obj
+}
+
+func process_project_md_file(md_file MarkdownFile) (string, ProjectFrontmatter) {
+	// First find the frontmatter data
+	md_data := strings.Replace(md_file.FileText, "\n", "", -1)
+	frontmatter_data := regexp.MustCompile(`===(.*)===`).FindStringSubmatch(md_data)[1]
+
+	// Then parse it
+	title_loc := strings.Index(frontmatter_data, "title")
+	date_loc := strings.Index(frontmatter_data, "date")
+	description_loc := strings.Index(frontmatter_data, "description")
+	link_loc := strings.Index(frontmatter_data, "link")
+
+	frontmatter_obj := ProjectFrontmatter{
+		FileName:    md_file.FileName,
+		Title:       frontmatter_data[title_loc+len("title:")+1 : date_loc],
+		Date:        frontmatter_data[date_loc+len("date:")+1 : description_loc],
+		Description: frontmatter_data[description_loc+len("description:")+1 : link_loc],
+		Link:        frontmatter_data[link_loc+len("link:"):],
 	}
 
 	var err error
@@ -237,12 +290,7 @@ func md_to_html(md_file MarkdownFile, p_type PostType) string {
 	opts := html.RendererOptions{Flags: htmlFlags}
 	renderer := html.NewRenderer(opts)
 
-	if p_type == BlogPost {
-		blogposts_data = append(blogposts_data, md_frontmatter)
-	} else if p_type == ProjectPost {
-		projects_data = append(projects_data, md_frontmatter)
-	}
-
+	blogposts_data = append(blogposts_data, md_frontmatter)
 	return assemble_webpage(blog_name+" · "+md_frontmatter.Title, string(markdown.Render(doc, renderer)))
 }
 
@@ -279,16 +327,21 @@ func generate_blog_homepage() {
 	}
 }
 
-func generate_projects_homepage() {
+func generate_projects_homepage(p_folder ProjectFolder) {
+	for _, fileData := range p_folder.MarkdownFiles {
+		_, md_frontmatter := process_project_md_file(fileData)
+		projects_data = append(projects_data, md_frontmatter)
+	}
+
 	sort.Sort(projects_data)
 	html_data := "<h1>My Projects</h1>"
 	anim_delay := 0.0
 	for x, project := range projects_data {
 		var blogpost_html string
 		if x < len(projects_data)-1 {
-			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(ProjectPathForLinks, project.FileName), project.Title, project.Date, project.Description, "<hr class=\"index-post-hr\">")
+			blogpost_html = fmt.Sprintf(HtmlProjectTemplate, anim_delay, project.Link, project.Title, project.Date, project.Description, "<hr class=\"index-post-hr\">")
 		} else {
-			blogpost_html = fmt.Sprintf(HtmlBlogpostTemplate, anim_delay, path.Join(ProjectPathForLinks, project.FileName), project.Title, project.Date, project.Description, "")
+			blogpost_html = fmt.Sprintf(HtmlProjectTemplate, anim_delay, project.Link, project.Title, project.Date, project.Description, "")
 		}
 		html_data += blogpost_html
 		anim_delay += AnimDelayIncrement
@@ -341,7 +394,6 @@ func main() {
 	}
 	{
 		projects_pages := load_blog_pages("posts/projects/", SiteProjectPath, ProjectPost)
-		publish_folder(projects_pages)
-		generate_projects_homepage()
+		generate_projects_homepage(projects_pages)
 	}
 }
