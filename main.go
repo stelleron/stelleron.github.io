@@ -300,7 +300,9 @@ func md_to_html(md_file MarkdownFile, p_type PostType) string {
 	opts := html.RendererOptions{Flags: htmlFlags}
 	renderer := html.NewRenderer(opts)
 
-	blogposts_data = append(blogposts_data, md_frontmatter)
+	if p_type == BlogPost {
+		blogposts_data = append(blogposts_data, md_frontmatter)
+	}
 	return assemble_webpage(blog_name+" · "+md_frontmatter.Title, string(markdown.Render(doc, renderer)))
 }
 
