@@ -17,7 +17,7 @@ body {
 
 body {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column;
   min-height: 100vh;
   margin: 0;
 }
@@ -30,7 +30,7 @@ body {
 
 @media (min-width: 48em) {
   body {
-    flex-direction: row; /* Arrange items horizontally */
+    flex-direction: row;
   }
 
   .sidebar {
@@ -38,7 +38,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     left: 2em;
-    bottom: auto; /* Remove the bottom property */
+    bottom: auto; 
     width: 24rem;
   }
 }
@@ -80,7 +80,7 @@ body {
     overflow: hidden;
     position: relative;
     padding: 5px;
-    border: 4px solid #a6a6a6; /* Optional: Add a border to the circular frame */
+    border: 4px solid #a6a6a6; 
 }
 
 .profile-pic img {
@@ -149,7 +149,7 @@ body {
 .index-post {
   opacity: 0;
   animation: fadeInUp;
-  animation-duration: 1.2s;     /* = (fadingin + showing + fadingout) * numquotes */
+  animation-duration: 1.2s;     
   animation-fill-mode: forwards;
   margin-top: 1.5em;
 }
