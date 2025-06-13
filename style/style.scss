@@ -188,7 +188,7 @@ body {
 
 .sidebar {
   flex: 0 0 22rem;
-  padding: 2rem 1rem;
+  padding: 2rem; /* remove padding so it doesn’t interfere */
   background-color: #f5f5f5;
   border-right: 0.5px solid black;
   text-align: right;
@@ -201,6 +201,16 @@ body {
 
 /* SIDEBAR CSS */
 /* =========== */
+.sidebar-cont {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22rem;     /* match sidebar width */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .profile-pic {
     width: 75px;
     height: 75px;
