@@ -174,6 +174,10 @@ body {
   font-family: "PT Serif", sans-serif;
 }
 
+.content img {
+  max-width: 100%;
+}
+
 /* GENERAL CSS */
 /* =========== */
 body {
@@ -195,6 +199,7 @@ body {
 .content {
   flex: 1;
   padding: 4em;
+  padding-top: 2em;
 }
 
 /* SIDEBAR CSS */
@@ -266,6 +271,10 @@ body {
 
 /* CONTENT CSS */
 /* =========== */
+h1 {
+  font-size: 32px;
+}
+
 hr {
   border: none;
   height: 0px;
@@ -278,10 +287,14 @@ hr {
   font-size: 25px;
   color: black;
   text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dotted #000;
+  text-decoration: none;
 }
 
 .index-post-title:hover {
   color: #7a6f6f;
+  border-bottom: 1px dotted #7a6f6f;
 }
 
 .index-post-date {
@@ -300,5 +313,5 @@ hr {
   animation: fadeInUp;
   animation-duration: 1.2s;
   animation-fill-mode: forwards;
-  margin-top: 1.5em;
+  margin-top: 1em;
 }/*# sourceMappingURL=style.css.map */
