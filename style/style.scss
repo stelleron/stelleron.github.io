@@ -172,7 +172,7 @@ body {
   padding: calc(var(--bleeding) + var(--margin) - 25px);
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
-  font-family: "PT Serif", sans-serif; 
+  font-family: "PT Serif", serif; 
 }
 
 .content img {
@@ -182,13 +182,12 @@ body {
 
 /* GENERAL CSS */
 /* =========== */
-
 body {
   display: flex;
   flex-direction: row; 
   min-height: 100vh;
   margin: 0;
-  font: 16px 'PT Serif', 'STZhongsong', '华文中宋', 'Microsoft Yahei', serif;
+  font: 'PT Serif', serif;
 }
 
 .sidebar {
