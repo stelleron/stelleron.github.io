@@ -1,5 +1,5 @@
 ===
-title: Shreyas Donti · Resume
+title: Resume
 date: 11-19-2023
 description: My Resume
 ===
