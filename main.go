@@ -162,7 +162,7 @@ func assemble_sidebar() string {
 	sidebar += fmt.Sprintf("<p class=\"description\"> %s </p>", description)
 	// Links to other parts of the page
 	sidebar += "<p class=\"sidebar-link-cont\"><a href=\"/\" class=\"sidebar-links\">Home</a></p>"
-	sidebar += "<p class=\"sidebar-link-cont\"><a href=\"/site/about.html\" class=\"sidebar-links\">About</a></p>"
+	sidebar += "<p class=\"sidebar-link-cont\"><a href=\"/site/about.html\" class=\"sidebar-links\">Projects</a></p>"
 	sidebar += "<p class=\"sidebar-link-cont\"><a href=\"/site/resume.html\" class=\"sidebar-links\">Resume</a></p>"
 	sidebar += "<p class=\"sidebar-link-cont\"><a href=\"/site/blog.html\" class=\"sidebar-links\">Blog</a></p>"
 	// Add links
