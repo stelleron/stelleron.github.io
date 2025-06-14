@@ -14,3 +14,13 @@ I'm interested in everything tech - from video game development to programming l
 - ⚡ **Electronics**: PCB design, circuit testing and design.
 - ⚙️ **FPGA Programming**: FPGA engineering for ML model acceleration.
 
+## My Experiences
+- 🎓 **Undergraduate Course Assistant** for UMass' CS 230 course on Computer Systems Principles.
+- 🛠️ **Tech Team Organizer** for HackUMass XII and XIII (upcoming).
+- 🤖 **Electronics Team Member** of UMass American Society of Mechanical Engineers Student Design Competition 2024-2025.
+- ⚙️ **FPGA Engineer** for UMass Cubesat Onboard Processing sub-team.
+- 🧪 **Undergradaute Research Volunteer (URV)** program cohort of Summer 2024, where I designed a 1-D CNN model of identifying postural transitions and other human activities using PyTorch.
+
+
+## My Projects
+- 
