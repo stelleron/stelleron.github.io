@@ -115,7 +115,9 @@ const HtmlTemplate = `<!DOCTYPE html>
 </head>
 <body>
 	<div class="sidebar">
+		<div class="sidebar-cont">
 		%s
+		</div>
 	</div>
 	<div class="content">
 		%s
@@ -151,9 +153,11 @@ func assemble_sidebar() string {
 	// Poster's name
 	sidebar += fmt.Sprintf("<h1 class=\"name\"> %s </h1>", blog_name)
 	// Poster's username and pronouns
+	sidebar += "<div>"
 	sidebar += fmt.Sprintf("<span class=\"username\"> %s </span>", username)
 	sidebar += "<span class=\"username\"> · </span>"
 	sidebar += fmt.Sprintf("<span class=\"pronouns\"> %s </span>", pronouns)
+	sidebar += "</div>"
 	// Poster's description
 	sidebar += fmt.Sprintf("<p class=\"description\"> %s </p>", description)
 	// Links to other parts of the page
