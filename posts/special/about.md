@@ -23,4 +23,6 @@ I'm interested in everything tech - from video game development to programming l
 
 
 ## My Projects
-- 
+- 🌐 **Nullsite**: Static site generator in Golang; generates HTML from Markdown files to create websites, including the site you're currently on!
+- 💻 **Resume Generator App**: Website created in React.js and Django to generate and customize resumes between roles.
+- 🎮🖥️ **Xenon Game Engine**: Game engine designed in C++ using SDL and OpenGL, includes graphics rendering, shaders, text rendering, audio, filesystem management, window and input management.
