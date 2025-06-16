@@ -172,7 +172,7 @@ body {
   padding: calc(var(--bleeding) + var(--margin) - 25px);
   box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
   background: white;
-  font-family: "PT Serif", serif; 
+  font-family: 16px "PT Serif", serif; 
 }
 
 .content img {
@@ -187,7 +187,7 @@ body {
   flex-direction: row; 
   min-height: 100vh;
   margin: 0;
-  font: 'PT Serif', serif;
+  font: 16px "PT Serif", serif;
 }
 
 .sidebar {
