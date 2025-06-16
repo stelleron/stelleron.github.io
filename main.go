@@ -167,6 +167,8 @@ func assemble_sidebar() string {
 	sidebar += "<p class=\"sidebar-link-cont\"><a href=\"/site/blog.html\" class=\"sidebar-links\">Blog</a></p>"
 	// Add links
 	sidebar += links_sidebar
+	// Add UMA Ring
+	sidebar += "<script id=\"umaring_js\" src=\"https://umaring.mkr.cx/ring.js?id=stelleron\"></script><div id=\"umaring\"></div>"
 	return sidebar
 }
 
