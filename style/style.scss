@@ -325,3 +325,44 @@ hr {
   animation-fill-mode: forwards;
   margin-top: 1em;
 }
+
+@media (max-width: 48em) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background-color: #f5f5f5;
+  }
+
+  .sidebar-cont {
+    position: relative;
+    transform: none;
+    top: auto;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #umaring {
+    margin-top: 0.5em;
+  }
+
+  .content {
+    margin: 0;
+    padding: 1.5rem;
+  }
+}
