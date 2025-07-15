@@ -138,11 +138,16 @@ const HtmlBlogpostTemplate = `
 
 const HtmlProjectTemplate = `
 <div class="index-post" style="animation-delay: %fs">
-<a href="%s" class="index-post-title">%s</a>
-<div class="index-post-date">%s</div>
-%s
-<p class="index-post-desc">%s</p>
-%s
+  <div class="index-post-header">
+    <a href="%s" class="index-post-title">
+		%s
+		<img src="/images/base/external-link.svg" class="index-post-icon" width="20" height="20">
+	</a>
+  </div>
+  <div class="index-post-date">%s</div>
+  %s
+  <p class="index-post-desc">%s</p>
+  %s
 </div>
 `
 

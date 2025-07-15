@@ -302,15 +302,32 @@ hr {
   text-decoration: none;
 }
 
+.index-post-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em; /* space between title and icon */
+}
+
+.index-post-title {
+  font-size: 22px;
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dotted #000;
+}
+
+.index-post-icon {
+  margin-left: -3px;
+  vertical-align: middle;
+}
+
 .index-post-title:hover {
   color: #7a6f6f;
   border-bottom: 1px dotted #7a6f6f;
 }
 
-.index-post-date {
-  margin-top: 0.4em;
-  color: #999;
-  margin-bottom: 1em;
+.index-post-title:hover .index-post-icon {
+  filter: brightness(0) saturate(100%) invert(41%) sepia(6%) saturate(454%) hue-rotate(314deg) brightness(95%) contrast(94%);
 }
 
 .index-post-desc {
