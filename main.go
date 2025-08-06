@@ -231,7 +231,7 @@ func process_project_md_file(md_file MarkdownFile) (string, ProjectFrontmatter) 
 	}
 
 	if frontmatter_obj.ProjectImage != "None" {
-		frontmatter_obj.ProjectImage = fmt.Sprintf("<img src=\"images/%s\" width=\"450\" height=\"300\">", frontmatter_obj.ProjectImage)
+		frontmatter_obj.ProjectImage = fmt.Sprintf("<img src=\"images/%s\" class=\"project-image\">", frontmatter_obj.ProjectImage)
 	} else {
 		frontmatter_obj.ProjectImage = ""
 	}
